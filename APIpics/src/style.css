@@ -1,0 +1,103 @@
+body{
+  font-family: 'Exo 2', sans-serif;
+}
+
+.image-content{
+  margin: 20px;
+  height: 400px;
+}
+.image{
+  display: block;
+  margin: auto;
+  max-height: 400px;
+}
+
+.wrapper{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: auto;
+  width: 600px;
+  height: 115px;
+}
+.container{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 290px;
+  height: 100%;
+}
+.grey{
+  background: linear-gradient(to left, #d1faff, #ffffff, #ffffff, #d1faff);
+}
+
+.button-container{
+  height: 50px;
+}
+.button{
+  width: 100%;
+  height: 100%;
+  background: #71ccf7;
+  border: none;
+}
+.button-autoplay{
+  background: #71a0f7;
+}
+.button-container p{
+  font-family: 'Exo 2', sans-serif;
+  text-transform: uppercase;
+  font-weight: 800;
+  font-size: 16px;
+  color: #ffffff;
+}
+.hover button:hover{
+  background: #54c0f1;
+}
+.hover button.button-autoplay:hover{
+  background: #548bf1;
+}
+.hover button:active{
+  background: #4cb7e9;
+}
+.hover button.button-autoplay:active{
+  background: #549df1;
+}
+
+.pixels{
+  height: 50px;
+}
+.text-content{
+  text-align: center;
+  background: #71ccf7;
+  border: none;
+  font-weight: 800;
+  font-size: 16px;
+  line-height: 50px;
+  color: #ffffff;
+}
+
+.timeset-container{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  height: 50px;
+}
+.button-timeset{
+  width: 70px;
+  height: 100%;
+  background: #71ccf7;
+  border: none;
+  font-weight: 800;
+  color: #ffffff;
+}
+#timeset{
+  width: 150px;
+  background: #71ccf7;
+}
+#timeset p{
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: 800;
+  font-size: 16px;
+  color: #ffffff;
+}
