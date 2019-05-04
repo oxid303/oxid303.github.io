@@ -15,11 +15,21 @@
 
 <body>
 
+  <div class="images-container">
+    <div id="images"></div>
+  </div>
+
   <div class="image-content">
     <img src="" id="my-image" class="image" />
   </div>
 
-  <div class="wrapper">
+  <div id="my-modal" class="modal close">
+    <span class="close-button close">&#10006;</span>
+    <img src="" id="image-modal" class="modal-content" />
+    <div id="caption">click anywhere to close &#10006;</div>
+  </div>
+
+  <div class="wrapper-buttons">
     <div class="container">
       <div class="button-container hover">
         <button id="get-new-image" class="button">
