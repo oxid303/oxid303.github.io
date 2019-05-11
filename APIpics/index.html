@@ -4,63 +4,46 @@
 <head>
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Dogs Pictures</title>
+  <title>Pictures</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" type="text/css" media="screen" href="./src/style.css" />
   <link href="https://fonts.googleapis.com/css?family=Exo+2" rel="stylesheet">
-  <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-    crossorigin="anonymous"></script>
-  <script src="./src/script.js"></script>
+  <link rel="stylesheet" type="text/css" media="screen" href="./src/style.css" />
 </head>
 
 <body>
 
-  <div class="images-container">
-    <div id="images"></div>
-  </div>
+  <div class="wrapper">
 
-  <div class="image-content">
-    <img src="" id="my-image" class="image" />
-  </div>
+    <div class="images-container">
+      <section class="images"></section>
+    </div>
 
-  <div id="my-modal" class="modal close">
-    <span class="close-button close">&#10006;</span>
-    <img src="" id="image-modal" class="modal-content" />
-    <div id="caption">click anywhere to close &#10006;</div>
-  </div>
+    <div class="big-image-container">
+      <img class="big-image" src="./img/default.jpg" alt="pic">
+    </div>
 
-  <div class="wrapper-buttons">
-    <div class="container">
-      <div class="button-container hover">
-        <button id="get-new-image" class="button">
-          <p>new image</p>
-        </button>
-      </div>
-      <div class="pixels">
-        <div id="image-attribute" class="text-content">Pixels : 0 x 0</div>
+    <div class="modal-container">
+      <div id="my-modal" class="modal close">
+        <span class="close-button close">&#10006;</span>
+        <a id="caption"></a>
+        <img src="" id="image-modal" class="modal-content" />
       </div>
     </div>
 
-    <div class="container grey">
-      <div class="button-container hover">
-        <button id="autoplay" class="button">
-          <p id="autoplay-text">autoplay</p>
-        </button>
-      </div>
-      <div class="timeset-container hover">
-        <button id="time-down" class="button-timeset">
-          <p>&lt;</p>
-        </button>
-        <div id="timeset">
-          <p>5 seconds</p>
-        </div>
-        <button id="time-up" class="button-timeset">
-          <p>&gt;</p>
-        </button>
-      </div>
+    <div class="buttons-container"></div>
+
+    <div class="side-button button-prev">
+      <span class="span-vertical">&lt;</span>
+    </div>
+
+    <div class="side-button button-next">
+      <span class="span-vertical">&gt;</span>
     </div>
   </div>
 
 </body>
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="./src/script.js"></script>
 
 </html>
