@@ -63,6 +63,8 @@ body{
   /* height: 100%; */
 }
 .big-image{
+  position: relative;
+  left: 0;
   display: block;
   margin: auto;
   max-width: 78%;
