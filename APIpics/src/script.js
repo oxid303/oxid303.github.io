@@ -1,41 +1,50 @@
 $(() => {
-  // var is_chrome = navigator.userAgent.toLowerCase().indexOf('chrome') > -1;
-
   let history = [],
+    idCurr,
     urlImage,
     urlImagePrev,
-    urlImageModalOpen,
+    urlModal,
     newImageDate,
     lastImageDate = 0,
     newArrowDate,
     lastArrowDate = 0,
     width = $(window).width(),
-    picsAmount = getPicsWidth(),
+    picsAmount = getPicsAmount(),
     modal = false,
     autoplay = false,
     seconds = 5,
-    run;
+    run,
+    mobile = false;
 
-  function getPicsWidth() {
-    return (width < 480) ? 4 :
-      (width < 624) ? 6 :
-        (width < 776) ? 8 :
-          (width < 992) ? 10 :
-            9;
+  if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|BB|PlayBook|IEMobile|Windows Phone|Kindle|Silk|Opera Mini/i.test(navigator.userAgent)) {
+    mobile = true;
+  }
+
+  function getPicsAmount() {
+    return (width < 480) ? 3 :
+      (width < 624) ? 5 :
+        (width < 776) ? 7 :
+          9;
   };
 
   $(window).resize(() => {
     width = $(window).width();
-    let picsAmountTmp = getPicsWidth();
+    let picsAmountTmp = getPicsAmount();
 
     if (picsAmount != picsAmountTmp) {
       picsAmount = picsAmountTmp;
-      viewImages();
+
+      let idFirst = idCurr;
+      if (history.length - idCurr < picsAmount) {
+        idFirst = history.length - picsAmount;
+        if (idFirst < 0) idFirst = 0;
+      }
+      viewImages(idFirst);
     }
   });
 
   function viewBigImage(id, url) {
-    urlImageModalOpen = url;
+    urlModal = url;
     $('.big-image').attr({ id: id, src: url });
     $('#caption').attr('href', url);
 
@@ -46,11 +55,13 @@ $(() => {
     }
   }
 
-  function viewImages(idStart, idEnd, idCurr) {
+  function viewImages(idFirst) {
     $('.images img, .images button').remove();
 
-    for (let i = idStart; i < idEnd; i++) {
-      if (i < 0) continue;
+    let idLast = idFirst + picsAmount;
+    if (idLast > history.length) idLast = history.length;
+
+    for (let i = idFirst; i < idLast; i++) {
       $('.images').append(`<img id="${history[i].id}" src="${history[i].src}" alt="default">`);
       if (i == idCurr) {
         $(`#id${i}`).addClass('highlight').removeClass('no-highlight');
@@ -58,8 +69,7 @@ $(() => {
         $(`#id${i}`).removeClass('highlight').addClass('no-highlight');
       }
     }
-
-    if (picsAmount == 9) $('.images').append(`<button type="button" class="btn btn-raised btn-info">&#10154;</button>`);
+    $('.images').append(`<button>&#10154;</button>`);
   }
 
   function getNewImage() {
@@ -83,23 +93,18 @@ $(() => {
         $('.big-image').remove();
         $('.big-image-container').html(`<img class="big-image" alt="pic">`);
 
-        const idImage = `big${history.length - 1}`
+        idCurr = history.length - 1;
+        const idImage = `big${idCurr}`;
         viewBigImage(idImage, urlImage);
 
-        let idImagesFirst = history.length - picsAmount,
-          idImagesLast = idImagesFirst + picsAmount;
-        if (idImagesFirst < 0) {
-          idImagesLast = picsAmount - Math.abs(idImagesFirst);
-          idImagesFirst = 0;
-        }
-        viewImages(idImagesFirst, idImagesLast, history.length - 1);
+        let idFirst = history.length - picsAmount;
+        if (idFirst < 0) idFirst = 0;
+        viewImages(idFirst);
       })
       .catch((err) => {
         console.log('Error555: ', err);
       });
   }
-
-  if (picsAmount == 9) $('.images').append(`<button type="button" class="btn btn-raised btn-info">&#10154;</button>`);
 
   getNewImage();
 
@@ -109,6 +114,10 @@ $(() => {
   });
 
   $('.big-image-container').on('click', 'img', () => {
+    // $('#caption').css({ ['display']: 'none' });
+    // $('.modal').css({ ['padding-top']: '10px' });
+    // $('.modal-content').css({ ['max-width']: '95%', ['max-height']: '95%' });
+    if (mobile) return;
     modal = true;
     $('#image-modal')[0].src = $('.big-image')[0].src;
     $('#my-modal').css('display', 'block');
@@ -121,19 +130,18 @@ $(() => {
 
   $('#caption').mousedown((e) => {
     if (e.which == 1) {
-      window.open(urlImageModalOpen, '_blank');
+      window.open(urlModal, '_blank');
     };
   });
 
   $('.images').on('click', 'img', function () {
-    const urlImageStr = this.src,
-      idImageStr = `big${+this.id.substring(2)}`;
+    idCurr = +this.id.substring(2);
+    const idImageStr = `big${idCurr}`,
+      urlImageStr = this.src;
     viewBigImage(idImageStr, urlImageStr);
 
-    const idImagesFirst = +$('.images img:first')[0].id.substring(2),
-      idImagesLast = +$('.images img:last')[0].id.substring(2),
-      idImageTmp = +this.id.substring(2);
-    viewImages(idImagesFirst, idImagesLast + 1, idImageTmp);
+    const idFirst = +$('.images img:first')[0].id.substring(2);
+    viewImages(idFirst);
   });
 
   $('.images').on('click', 'button', function () {
@@ -186,37 +194,37 @@ $(() => {
   $('#time-down').click(() => timeSet('down'));
 
   function arrow(key) {
-    const idImageBig = $('.big-image')[0].id ? +$('.big-image')[0].id.substring(3) : history.length - 1,
-      idImageFirst = +$('.images img:first')[0].id.substring(2),
-      idImageLast = +$('.images img:last')[0].id.substring(2) + 1;
+    const idFirst = +$('.images img:first')[0].id.substring(2);
 
     switch (key) {
       case 'next':
-        if (idImageBig == history.length - 1) {
+        if (idCurr == history.length - 1) {
           getNewImage();
           break;
         };
-        const idNext = `big${idImageBig + 1}`,
-          urlNext = history[idImageBig + 1].src;
+        idCurr += 1;
+        const idNext = `big${idCurr}`,
+          urlNext = history[idCurr].src;
         viewBigImage(idNext, urlNext);
 
-        if (idImageBig == idImageLast - 1) {
-          viewImages(idImageFirst + 1, idImageLast + 1, idImageBig + 1);
+        if (idCurr > idFirst + picsAmount - 1) {
+          viewImages(idFirst + 1);
         } else {
-          viewImages(idImageFirst, idImageLast, idImageBig + 1);
+          viewImages(idFirst);
         };
         break;
 
       case 'prev':
-        if (idImageBig == 0) break;
-        const idPrev = `big${idImageBig - 1}`,
-          urlPrev = history[idImageBig - 1].src;
+        if (idCurr == 0) break;
+        idCurr -= 1;
+        const idPrev = `big${idCurr}`,
+          urlPrev = history[idCurr].src;
         viewBigImage(idPrev, urlPrev);
 
-        if (history.length > picsAmount && idImageFirst == idImageBig) {
-          viewImages(idImageFirst - 1, idImageLast - 1, idImageBig - 1);
+        if (idCurr < idFirst) {
+          viewImages(idFirst - 1);
         } else {
-          viewImages(idImageFirst, idImageLast, idImageBig - 1);
+          viewImages(idFirst);
         };
         break;
 
@@ -225,8 +233,8 @@ $(() => {
     }
   }
 
-  $('.button-next').click(() => { arrow('next') });
-  $('.button-prev').click(() => { arrow('prev') });
+  $('.button-next').click(() => arrow('next'));
+  $('.button-prev').click(() => arrow('prev'));
 
   $(document).keydown((e) => {
     newArrowDate = new Date().getTime();
