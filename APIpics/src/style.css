@@ -1,4 +1,5 @@
 html {
+  /* position: relative; */
   height: 100%;
   min-width: 320px;
 }
@@ -16,11 +17,14 @@ body{
   margin: 15px auto;
   height: 70px;
 }
+.images-item{
+  position: relative;
+  cursor: pointer;
+}
 .images img{
   bottom: 0;
   max-width: 70px;
   max-height: 70px;
-  cursor: pointer;
 }
 .no-highlight{
   margin: 3px;
@@ -46,7 +50,6 @@ body{
   margin: 3px;
   width: 70px;
   height: 70px;
-  cursor: pointer;
   transition: 0.2s;
 }
 .images button:hover{
@@ -92,8 +95,8 @@ body{
   top: 0;
   width: 150px;
   height: 100%;
-  opacity: 0;
   transition: 0.1s;
+  /* opacity: 0; */
 }
 .button-prev{
   left: 0;
