@@ -21,6 +21,7 @@ $(() => {
   if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|BB|PlayBook|IEMobile|Windows Phone|Kindle|Silk|SymbianOS|Opera Mini/i.test(navigator.userAgent)) {
     mobile = true;
     $('.side-button').css('display', 'none');
+    $('.autoplay-wrapper').css({['background-color']: '#79b3e6;'});
     viewMobile();
   }
 
@@ -34,7 +35,6 @@ $(() => {
   $(window).resize(() => {
     width = $(window).width();
     height = $(window).height();
-    // $('html').css('width', width + 'px');
 
     if (mobile) viewMobile();
 
@@ -108,7 +108,6 @@ $(() => {
       }
     }
 
-    // '&#10153;' '&#10154;'
     let buttonSymbol;
     if (idCurr == history.length - 1) {
       buttonSymbol = '&#10146;'
@@ -239,7 +238,6 @@ $(() => {
       $('.autoplay').animate({ 'opacity': 0 }, 200, function () {
         $(this).text(autoplay ? 'STOP' : 'PLAY')
       }).animate({ 'opacity': 1 }, 200);
-      // $('.autoplay').text(autoplay ? 'STOP' : 'PLAY');
     }, 2000);
   }
 
@@ -269,7 +267,11 @@ $(() => {
         break;
 
       case 'prev':
-        if (autoplay) runClearInterval();
+        if (autoplay) {
+          runClearInterval();
+          $('.autoplay').text(autoplay ? 'PLAY' : 'STOP');
+          autoplay = !autoplay;
+        }
         if (idCurr == 0) {
           idCurr = history.length;
           idFirst = history.length - picsAmount;
@@ -316,7 +318,11 @@ $(() => {
         break;
 
       case 'scrollPrev':
-        if (autoplay) runClearInterval();
+        if (autoplay)  {
+          runClearInterval();
+          $('.autoplay').text(autoplay ? 'PLAY' : 'STOP');
+          autoplay = !autoplay;
+        }
         if (idCurr == 0) break;
         if (idFirst == 0) {
           idCurr = 0;
