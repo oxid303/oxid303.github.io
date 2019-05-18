@@ -21,8 +21,7 @@ $(() => {
   if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|BB|PlayBook|IEMobile|Windows Phone|Kindle|Silk|SymbianOS|Opera Mini/i.test(navigator.userAgent)) {
     mobile = true;
     $('.side-button').css('display', 'none');
-    $('.autoplay-wrapper').css({['background-color']: '#79b3e6;'});
-    viewMobile();
+    $('.autoplay-wrapper').css({['grid-template-columns']: '70px auto 70px'});
   }
 
   function getPicsAmount() {
@@ -151,16 +150,17 @@ $(() => {
 
   getNewImage();
 
-  $('#get-new-image').click(() => {
-    getNewImage();
-    if (autoplay) runSetInterval();
-  });
-
   $('.big-image-container').on('click', 'img', () => {
     if (mobile) return;
     modal = true;
     $('#image-modal')[0].src = $('.big-image')[0].src;
     $('#my-modal').css('display', 'block');
+    
+    if (autoplay) {
+      runClearInterval();
+      $('.autoplay').text(autoplay ? 'PLAY' : 'STOP');
+      autoplay = !autoplay;
+    }
   });
 
   $('.close').click(() => {
@@ -182,6 +182,12 @@ $(() => {
 
     const idFirst = +$('.images img:first')[0].id.substring(2);
     viewImages(idFirst);
+    
+    if (autoplay) {
+      runClearInterval();
+      $('.autoplay').text(autoplay ? 'PLAY' : 'STOP');
+      autoplay = !autoplay;
+    }
   });
 
   $('.images').on('click', 'button', function () {
@@ -362,9 +368,6 @@ $(() => {
 
 
 
-
-
-
   if (mobile) {
     function swipe(el, settings) {
 
@@ -377,9 +380,7 @@ $(() => {
 
       let dir,
         swipeType,
-        dist,
-        isMouse = false,
-        isMouseDown = false,
+        isHandUp = false,
         startX = 0,
         distX = 0,
         startY = 0,
@@ -392,11 +393,10 @@ $(() => {
         if (typeof e.touches !== "undefined" && e.touches.length !== 1) return; // ignoring touch with a few fingers
         dir = "none";
         swipeType = "none";
-        dist = 0;
         startX = event.pageX;
         startY = event.pageY;
         startTime = new Date().getTime();
-        isMouseDown = true;
+        isHandUp = true;
         // e.preventDefault();
 
         if (el == $('.big-image-container')[0]) touchElement = 'bigImage';
@@ -404,7 +404,7 @@ $(() => {
       };
 
       function checkMove(e) {
-        if (isMouse && !isMouseDown) return; // exit function if the mouse is no longer active while driving
+        if (!isHandUp) return; // exit function if the hand is no longer active
         let event = e.changedTouches[0];
         distX = event.pageX - startX;
         distY = event.pageY - startY;
@@ -426,7 +426,6 @@ $(() => {
             swipeType = dir; // check character as "top" or "down"
           }
         }
-        dist = (dir === "left" || dir === "right") ? Math.abs(distX) : Math.abs(distY); // check distance
         // e.preventDefault();
 
         if (touchElement == 'bigImage' && swipeType == 'left') arrow('next');
@@ -435,17 +434,16 @@ $(() => {
         if (touchElement == 'imagesItem' && swipeType == 'left') arrow('scrollNext');
         if (touchElement == 'imagesItem' && swipeType == 'right') arrow('scrollPrev');
 
-        if (isMouse && isMouseDown) { // exit function and reset 'mouse click' test
+        if (isHandUp) { // exit function and reset 'mouse click' test
           if (touchElement == 'bigImage') $('.big-image').css({ left: '50%' });
           if (touchElement == 'imagesItem') $('.images-item').css({ left: 0 });
-          isMouseDown = false;
+          isHandUp = false;
           return;
         }
         if (touchElement == 'bigImage') $('.big-image').css({ left: '50%' });
         if (touchElement == 'imagesItem') $('.images-item').css({ left: 0 });
       };
 
-      // add supported events
       let events = {
         type: "touch",
         start: "touchstart",
@@ -455,7 +453,6 @@ $(() => {
         leave: "mouseleave",
       };
 
-      // add handlers to an item
       el.addEventListener(events.start, checkStart);
       el.addEventListener(events.move, checkMove);
       el.addEventListener(events.end, checkEnd);

@@ -119,9 +119,9 @@ body{
 .time-item{
   font-size: 30px;
 }
-.autoplay-items:hover{
+/* .autoplay-items:hover{
   background-color: #79b3e67a;
-}
+} */
 .autoplay-items::selection{
   background: transparent;
 }
@@ -243,5 +243,11 @@ body{
   }
   .side-button{
     width: 100px;
+  }
+}
+
+@media (hover: hover) {
+  .autoplay-items:hover{
+    background-color: #79b3e67a;
   }
 }
