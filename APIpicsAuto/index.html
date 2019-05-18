@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Pictures</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://fonts.googleapis.com/css?family=Exo+2" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" media="screen" href="./src/style.css" />
+</head>
+
+<body>
+
+  <div class="wrapper">
+
+    <div class="images-container">
+      <section class="images"></section>
+    </div>
+
+    <div class="big-image-container">
+      <img class="big-image" src="./img/default.jpg" alt="pic">
+    </div>
+
+    <div class="autoplay-container">
+      <div class="autoplay-wrapper">
+        <span class="autoplay-items time-down time-item">&lt;</span>
+        <span class="autoplay-items autoplay">PLAY</span>
+        <span class="autoplay-items time-up time-item">&gt;</span>
+      </div>
+    </div>
+
+    <div class="modal-container">
+      <div id="my-modal" class="modal close">
+        <span class="close-button close">&#10006;</span>
+        <a id="caption"></a>
+        <img src="" id="image-modal" class="modal-content" />
+      </div>
+    </div>
+
+    <div class="side-button button-prev">
+      <span class="span-vertical">&lt;</span>
+    </div>
+
+    <div class="side-button button-next">
+      <span class="span-vertical">&gt;</span>
+    </div>
+  </div>
+
+</body>
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="./src/script.js"></script>
+
+</html>

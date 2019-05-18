@@ -1,0 +1,252 @@
+html {
+  /* position: relative; */
+  height: 100%;
+  min-width: 320px;
+}
+
+body{
+  font-family: 'Exo 2', sans-serif;
+  background-image: url("../img/back.jpg");
+  background-size: 100% auto;
+}
+
+.images-container{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin: 15px auto;
+  height: 70px;
+}
+.images-item{
+  position: relative;
+  cursor: pointer;
+}
+.images img{
+  bottom: 0;
+  max-width: 70px;
+  max-height: 70px;
+}
+.no-highlight{
+  margin: 3px;
+}
+.highlight{
+  margin: 0 3px;
+  border-style: double hidden;
+  border-width: 3px;
+  border-color: #ffe600;
+  border-radius: 3px;
+}
+.highlight:hover,
+.no-highlight:hover{
+  opacity: 0.7;
+}
+
+.images button{
+  vertical-align: top;
+  font-size: 30px;
+  font-weight: bold;
+  border: none;
+  background-color: #79b3e6;
+  margin: 3px;
+  width: 70px;
+  height: 70px;
+  transition: 0.2s;
+}
+.images button:hover{
+  background-color: #54abf3;
+}
+.images button::selection{
+  background: transparent;
+}
+
+
+
+.big-image-container{
+  margin: 20px;
+  /* height: 100%; */
+}
+.big-image{
+  position: relative;
+  left: 0;
+  display: block;
+  margin: auto;
+  max-width: 78%;
+  max-height: 400px;
+  cursor: pointer;
+  animation: show 2s 1;
+}
+@keyframes show{
+   0%{
+     opacity:0;
+   }
+   100% {
+     opacity:1;
+   }
+}
+.loader{
+  display: block;
+  margin: auto;
+}
+.big-image::selection{
+  background: transparent;
+}
+
+
+
+.autoplay-container{
+  display: block;
+}
+.autoplay-wrapper{
+  position: absolute;
+  bottom: 18px;
+  left: 50%;
+  transform: translate(-50%, 0);
+  background-color: #79b3e6;
+  width: 90%;
+  max-width: 500px;
+  height: 70px;
+  font-weight: bold;
+  line-height: 70px;
+  white-space: nowrap;
+  display: grid;
+  grid-template-columns: 100px auto 100px;
+  cursor: pointer;
+}
+.autoplay-items{
+  text-align: center;
+  transition: 0.2s;
+}
+.autoplay{
+  font-size: 25px;
+  /* letter-spacing: 2px; */
+}
+.time-item{
+  font-size: 30px;
+}
+.autoplay-items:hover{
+  background-color: #54abf3;
+}
+.autoplay-items::selection{
+  background: transparent;
+}
+
+
+
+.side-button{
+  position: absolute;
+  top: 0;
+  width: 150px;
+  height: 100%;
+  transition: 0.1s;
+  /* opacity: 0; */
+}
+.button-prev{
+  left: 0;
+}
+.button-next{
+  right: 0;
+}
+.button-prev:hover{
+  cursor: pointer;
+  background: #79b3e67a;
+  opacity: 1;
+}
+.button-next:hover{
+  cursor: pointer;
+  background: #79b3e67a;
+  opacity: 1;
+}
+.span-vertical{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  font-size: 50px;
+}
+.span-vertical::selection{
+  background: transparent;
+}
+
+
+
+.modal{
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 20px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: #000000; /* Fallback color */
+  background-color: #000000e6; /* Black w/ opacity */
+}
+.modal-content{
+  margin: auto;
+  display: block;
+  max-width: 80%;
+  max-height: 80%;
+}
+#caption{
+  text-decoration: none;
+  font-size: 20px;
+  margin: 20px auto;
+  display: block;
+  max-width: 230px;
+  text-align: center;
+  color: #ccc;
+  padding: 10px 0;
+}
+#caption:hover{
+  cursor: pointer;
+  background-color: #79b3e67a;
+  border-radius: 5px;
+}
+#caption::selection{
+  background: transparent;
+}
+.modal-content, #caption{ 
+  animation-name: zoom;
+  animation-duration: 0.6s;
+}
+@keyframes zoom{
+  from {transform:scale(0)} 
+  to {transform:scale(1)}
+}
+.close-button{
+  position: absolute;
+  top: 15px;
+  right: 35px;
+  color: #f1f1f1;
+  font-size: 40px;
+  font-weight: bold;
+  transition: 0.3s;
+}
+.close-button:hover,
+.close-button:focus{
+  color: #bbb;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+
+
+@media (max-width: 991px) {
+  .big-image{
+    max-width: 95%;
+    cursor: unset;
+  }
+  .side-button{
+    display: none;
+  }
+}
+
+@media (max-width: 1199px) {
+  .big-image{
+    max-width: 84%;
+  }
+  .side-button{
+    width: 100px;
+  }
+}
